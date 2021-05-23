@@ -215,6 +215,10 @@ resource "azurerm_windows_virtual_machine" "tf_win_vm_1" {
   admin_username = "adminuser"
   admin_password = "password"
 
+  network_interface_ids = [
+    azurerm_network_interface.tf_my_nic_1.id,
+  ]
+
   # left empty as i had to refer this from docs
   source_image_reference {
 
@@ -238,6 +242,10 @@ resource "azurerm_windows_virtual_machine" "tf_win_vm_2" {
   size = "Standard"
   admin_username = "adminuser"
   admin_password = "password"
+
+  network_interface_ids = [
+    azurerm_network_interface.tf_my_nic_2.id,
+  ]
 
   # left empty as i had to refer this from docs
   source_image_reference {
