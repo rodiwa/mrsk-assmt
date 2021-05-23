@@ -6,13 +6,12 @@
 # I am keeping all code in 1 file here for simple readability
 
 # provider
-provider "azure_rm" {
-  version = ""
-  subscription_id = ""
-  tenant_id = ""
-
-  features {
-
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.46.0"
+    }
   }
 }
 
@@ -78,11 +77,11 @@ variable WIN_NIC_NAME_2 {
 }
 
 # terraform remote backend to save tfstate
-terraform "backend" {
-  storage_account = ""
-  token_id = ""
-  access_id = "" 
-}
+# terraform "backend" {
+#   storage_account = ""
+#   token_id = ""
+#   access_id = "" 
+# }
 
 # resource group
 resource "azurerm_resource_group" "tf_rg" {
