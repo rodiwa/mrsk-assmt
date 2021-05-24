@@ -1,18 +1,18 @@
 # Scenario 2
 
-1) What are different artifacts you need to create - name of the artifacts and its purpose
+>1) What are different artifacts you need to create - name of the artifacts and its purpose
 - Here we can create an artifact for terraform files only (since no application code has been mentioned). When you are creating a build pipeline, and your code is on a github/ azure repo, there is an option to copy files from repo directly to artifact path.
 - Generally artifacts are needed if you're trying to share data from one job, task, pipeline to another (think of it as a moving data to a shared folder which can be accessed by other entites).
 - Usually you have an artifact created if you're creating an application build (dotnet gives you ZIP, node gives you `./build` folder, etc).
 
-2) List the tools you will to create and store the Terraform templates.
+>2) List the tools you will to create and store the Terraform templates.
 - To Create
   - IMO, best to start from an existing template (online/ community/ existing project), and then update it as per your own requirement, instead of starting from scratch. Some scaffolding tools are available (for ex, Yeoman).
 - To Store
   - Recommended way is to save it alongside your `src` code in your repo, maybe in a folder named `infra`.
   - Or if its a common architecture you want to enforce on other teams in your organization, you can store terraform templates/ modules of specific instances in its own repo and other projects can include it in their project.
   - Another option can be to store all your terraform template files in storage account and secure it using RBAC.
-3) Explain the process and steps to create automated deployment pipeline.
+>3) Explain the process and steps to create automated deployment pipeline.
 - There are many ways to do this, in general, these are some strategies
   - Create build pipeline to create applciation builds, run unit tests and integration tests, create feedback loop for dev, QAs. Once application is build successfully, publish it as an artifact to be consumed by the release pipeline. Add load testing, security testing, etc in this phase. Use gates and approvals to promote builds to higher envs.
   - If project is not too big, another way can be to do deployments in build pipleline itself. Esp if stages to be deployment are dev, test envs mostly. 
@@ -32,7 +32,7 @@
   - add tasks to your stage. hashicorp has some tasks to `init`, `plan` and `validate and apply` already written. or you can also write your own script here to do this. if writing script, mention `auto-approve` and `input=false` in `terraform apply` step.
   - You can use different `variable` files to deploy infra to different environments (using the same tf template). 
 
-4) Create a sample Terraform template you will use to deploy Below services:
+>4) Create a sample Terraform template you will use to deploy Below services:
 - Services are  
   - Vnet
   - 2 Subnet
@@ -48,7 +48,7 @@
   - `paramters.tf` is to give type definition and default values. Use default values for resources with optional values. Do not give default values for mandatory fields.
   - `variables.tf` can be used to give runtime values for deploying resources in different env with different properties for each env. For ex, diff size of VM for dev, test, prod, diff location for resources, etc.
 
-5) Explain how will you access the password stored in Key Vault and use it as Admin Password in the VM Terraform template.
+>5) Explain how will you access the password stored in Key Vault and use it as Admin Password in the VM Terraform template.
 - Here are the steps
   - create a new service connection/ principal so az pipelines can communicate to az key vault securely.
   - in az key vault, goto the keys (password) that you have created and saved there and allow the service connection access to it. you specifically want to give it the `get`, `list`, `read` permissions so az pipleline can read the values.
